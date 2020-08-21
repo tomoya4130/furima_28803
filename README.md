@@ -25,11 +25,11 @@
 | image                  | string     | null: false                    |
 | name                   | string     | null: false                    |
 | text                   | text       | null: false                    |
-| category_id            | string     | null: false                    |
-| status_id              | string     | null: false                    |
-| shipping_fee_burden_id | string     | null: false                    |
-| shipping_region_id     | string     | null: false                    |
-| days_until_shipping_id | string     | null: false                    |
+| category_id            | integer    | null: false                    |
+| status_id              | integer    | null: false                    |
+| shipping_fee_burden_id | integer    | null: false                    |
+| shipping_region_id     | integer    | null: false                    |
+| days_until_shipping_id | integer    | null: false                    |
 | price                  | integer    | null: false                    |
 | user                   | references | null: false, foreign_key: true |
 
@@ -56,7 +56,7 @@
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
 | postal_code      | string     | null: false                    |
-| prefectures_id   | string     | null: false                    |
+| prefectures_id   | integer    | null: false                    |
 | city             | string     | null: false                    |
 | house_number     | string     | null: false                    |
 | building         | string     |                                |
