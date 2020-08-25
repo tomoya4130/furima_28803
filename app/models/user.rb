@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   with_options presence: true do
       VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-      VALID_PASSWORD_REGEX =/\A(?=.*?[a-z])(?=.*?[\d])\w{6,}\z/
+      VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])\w{6,}\z/
       validates :nickname
       validates :email, format: { with: VALID_EMAIL_REGEX , message: "can't be blank" }, uniqueness: { case_sensitive: false } #一意性制約
       validates :password, format: { with: VALID_PASSWORD_REGEX, message: "Include both letters and numbers"} 
