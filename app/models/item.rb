@@ -15,5 +15,5 @@ class Item < ApplicationRecord
   validates :shipping_region_id, numericality: { other_than: 0, message: "Select"}
   validates :days_until_shipping_id, numericality: { other_than: 0, message: "Select"}
   #金額範囲に関するバリデーション
-  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9,999,999, message: "is out of setting range"}
+  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is out of setting range"}
 end
