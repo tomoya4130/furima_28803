@@ -30,28 +30,28 @@ RSpec.describe Item, type: :model do
           @item.valid?
           expect(@item.errors.full_messages).to include("Text can't be blank")
         end
-        it 'category_idが空では登録できない' do
-          @item.category_id = nil
+        it 'category_idが0では登録できない' do
+          @item.category_id = '0'
           @item.valid?
           expect(@item.errors.full_messages).to include('Category Select')
         end
-        it 'status_idが空だと登録できない' do
-          @item.status_id = nil
+        it 'status_idが0だと登録できない' do
+          @item.status_id = '0'
           @item.valid?
           expect(@item.errors.full_messages).to include('Status Select')
         end
-        it 'shipping_fee_burden_idが空だと登録できない' do
-          @item.shipping_fee_burden_id = nil
+        it 'shipping_fee_burden_idが0だと登録できない' do
+          @item.shipping_fee_burden_id = '0'
           @item.valid?
           expect(@item.errors.full_messages).to include('Shipping fee burden Select')
         end
-        it 'shipping_region_idが空だと登録できない' do
-          @item.shipping_region_id = nil
+        it 'shipping_region_idが0だと登録できない' do
+          @item.shipping_region_id = '0'
           @item.valid?
           expect(@item.errors.full_messages).to include('Shipping region Select')
         end
-        it 'days_until_shipping_idが空だと登録できない' do
-          @item.days_until_shipping_id = nil
+        it 'days_until_shipping_idが0だと登録できない' do
+          @item.days_until_shipping_id = '0'
           @item.valid?
           expect(@item.errors.full_messages).to include('Days until shipping Select')
         end

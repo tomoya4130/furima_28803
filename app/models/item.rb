@@ -20,9 +20,11 @@ class Item < ApplicationRecord
   end
 
   # ActiveHashの選択が「ーーー」のときは保存できないようにする
-  validates :category_id, numericality: { other_than: 0, message: 'Select' }
-  validates :status_id, numericality: { other_than: 0, message: 'Select' }
-  validates :shipping_fee_burden_id, numericality: { other_than: 0, message: 'Select' }
-  validates :shipping_region_id, numericality: { other_than: 0, message: 'Select' }
-  validates :days_until_shipping_id, numericality: { other_than: 0, message: 'Select' }
+  with_options numericality: { other_than: 0, message: 'Select' } do
+    validates :category_id
+    validates :status_id
+    validates :shipping_fee_burden_id
+    validates :shipping_region_id
+    validates :days_until_shipping_id
+  end
 end
