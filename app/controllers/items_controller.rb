@@ -28,9 +28,8 @@ class ItemsController < ApplicationController
   end
 
   def update
-    item = Item.find(params[:id])
-    item.update(item_params)
-    if item.save
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
       redirect_to item_path
     else
       render :edit
@@ -47,7 +46,7 @@ class ItemsController < ApplicationController
     end
   end
 
-  # createでこのデータが保存されるかどうか判断する
+  # create,updateでこのデータが保存されるかどうか判断する
   def item_params
     params.require(:item).permit(:image, :name, :text, :category_id, :status_id, :shipping_fee_burden_id, :shipping_region_id, :days_until_shipping_id, :price).merge(user_id: current_user.id)
   end
