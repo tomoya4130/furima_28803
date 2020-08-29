@@ -37,10 +37,11 @@ class ItemsController < ApplicationController
   def destroy
     if @item.destroy
       redirect_to items_path
-    else 
+    else
       render :edit
     end
   end
+
   private
 
   # ログインしていない場合登録画面に遷移する
