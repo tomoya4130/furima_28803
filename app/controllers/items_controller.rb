@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   # before_action :authenticate_user!, expect: :index
   before_action :login_check, only: :new
-  before_action :specific_item_id, only: [:show, :edit, :update]
+  before_action :specific_item_id, only: [:show, :edit, :update, :destroy]
 
   def index
     @items = Item.includes(:user).order('created_at DESC') # 新規投稿順に並び替える
@@ -31,6 +31,14 @@ class ItemsController < ApplicationController
       redirect_to item_path
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @item.destroy
+      redirect_to items_path
+    else
+      render :show
     end
   end
 
