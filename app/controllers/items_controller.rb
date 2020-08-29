@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   # before_action :authenticate_user!, expect: :index
   before_action :login_check, only: :new
+  before_action :specific_item_id, only: [:show, :edit, :update]
 
   def index
     @items = Item.includes(:user).order('created_at DESC') # 新規投稿順に並び替える
@@ -20,15 +21,12 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
     if @item.update(item_params)
       redirect_to item_path
     else
@@ -54,5 +52,9 @@ class ItemsController < ApplicationController
   # ActiveStorageによりログインしているユーザーが画像を添付した際にitemテーブルにあるnameとpriceカラムの情報も受け取るようにしている（itemとActiveStorageはアソシエーションにより紐づいている）
   def message_params
     params.require(:item).permit(:image, :name, :price).merge(user_id: current_user.id)
+  end
+
+  def specific_item_id
+    @item = Item.find(params[:id])
   end
 end
