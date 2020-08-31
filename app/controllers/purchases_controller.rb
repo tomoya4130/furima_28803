@@ -1,4 +1,5 @@
 class PurchasesController < ApplicationController
+  before_action :login_check, only: :index
 
   def index
     @purchase = Purchase.new
@@ -17,6 +18,14 @@ class PurchasesController < ApplicationController
   end
 
   private
+
+  # ログインしていない場合登録画面に遷移する
+  def login_check
+    unless user_signed_in?
+      flash[:alert] = 'ログインしてください'
+      redirect_to new_user_session_path
+    end
+  end
 
   def purchase_params
     params.require(:purchase).permit(user_id: current_user.id, item_id: params[:item_id])
