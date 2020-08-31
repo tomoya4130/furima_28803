@@ -1,5 +1,4 @@
 class ItemsController < ApplicationController
-  # before_action :authenticate_user!, expect: :index
   before_action :login_check, only: :new
   before_action :specific_item_id, only: [:show, :edit, :update, :destroy]
 
