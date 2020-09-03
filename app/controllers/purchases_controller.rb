@@ -1,20 +1,21 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @item = Item.find(params[:item_id])
     return redirect_to root_path if current_user.id == @item.user_id #出品者は購入画面にいけないようにしている
-    @purchase = Purchase.new
-   
-    # @purchases = @item.purchase.includes(:user)
+    @purchase = PurchaseAddress.new
   end
 
   def create
-    @purchase = Purchase.new(item_id: purchase_params[:item_id], user_id: purchase_params[:user_id])
+    @purchase = PurchaseAddress.new(purchase_params)
+    
     if @purchase.valid?
       pay_item
       @purchase.save
       return redirect_to root_path
     else
+      @item = Item.find(params[:item_id])
       render :index
     end
   end
@@ -22,15 +23,15 @@ class PurchasesController < ApplicationController
   private
 
   def purchase_params
-    params.permit(:item_id, :user_id, :token)
+    params.require(:purchase_address).permit(:postal_code, :prefecture_id, :city, :house_number, :building, :phone_number).merge(token: params[:token], item_id: params[:item_id], user_id: current_user.id)
   end
 
   def pay_item
-    Payjp.api_key = "sk_test_868ce3e4cb726eddddc57616"
+    @item = Item.find(params[:item_id])
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      item_id: purchase_params[:item_id], #商品のid
-      user_id: purchase_params[:user_id], #出品者のid
-      card: purchase_params[:token],   #カードトークン
+      amount: @item.price, #値段
+      card: params[:token],   #カードトークン
       currency: 'jpy'                  #通過の種類（日本円）
     )
   end
