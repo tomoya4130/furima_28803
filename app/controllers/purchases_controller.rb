@@ -3,7 +3,8 @@ class PurchasesController < ApplicationController
 
   def index
     @item = Item.find(params[:item_id])
-    return redirect_to root_path if current_user.id == @item.user_id #出品者は購入画面にいけないようにしている
+    return redirect_to root_path if current_user.id == @item.user_id # 出品者は購入画面にいけないようにしている
+
     @purchase = PurchaseAddress.new
   end
 
@@ -12,7 +13,7 @@ class PurchasesController < ApplicationController
     if @purchase.valid?
       pay_item
       @purchase.save
-      return redirect_to root_path
+      redirect_to root_path
     else
       @item = Item.find(params[:item_id])
       render :index
@@ -27,11 +28,11 @@ class PurchasesController < ApplicationController
 
   def pay_item
     @item = Item.find(params[:item_id])
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
-      amount: @item.price, #値段
-      card: params[:token],   #カードトークン
-      currency: 'jpy'                  #通過の種類（日本円）
+      amount: @item.price, # 値段
+      card: params[:token], # カードトークン
+      currency: 'jpy'                  # 通過の種類（日本円）
     )
   end
 end
