@@ -3,15 +3,18 @@ class ItemsController < ApplicationController
   before_action :specific_item_id, only: [:show, :edit, :update, :destroy]
 
   def index
-    @items = Item.includes(:user).order('created_at DESC') # 新規投稿順に並び替える
+    # 新規投稿順に並び替える
+    @items = Item.includes(:user).order('created_at DESC')
   end
 
   def new
-    @item = Item.new # itemテーブルに新しいレコードを追加する
+    # itemテーブルに新しいレコードを追加する
+    @item = Item.new
   end
 
   def create
-    @item = Item.new(item_params) # データの保存に成功したらトップページへ、失敗したら出品ページへ遷移する
+    # データの保存に成功したらトップページへ、失敗したら出品ページへ遷移する
+    @item = Item.new(item_params)
     if @item.save
       redirect_to items_path
     else
