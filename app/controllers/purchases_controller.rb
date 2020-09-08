@@ -4,7 +4,7 @@ class PurchasesController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
     return redirect_to root_path if current_user.id == @item.user_id # 出品者は購入画面にいけないようにしている
-
+    return redirect_to root_path if @item.purchase != nil #購入済みの商品にいけないようにする
     @purchase = PurchaseAddress.new
   end
 
